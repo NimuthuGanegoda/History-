@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-white text-gray-900 dark:bg-black dark:text-gray-100 transition-colors;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: -0.022em;
+  }
+  
+  img {
+    content-visibility: auto;
+  }
+  
+  section {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+  }
+}
+
+@layer components {
+  /* Hero section */
+  .hero-section {
+    @apply min-h-screen flex items-center justify-center relative overflow-hidden;
+    background: linear-gradient(180deg, #fbfbfd 0%, #ffffff 100%);
+  }
+  
+  .dark .hero-section {
+    background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
+  }
+
+  /* Apple-style typography */
+  .apple-headline {
+    @apply text-[40px] md:text-[56px] lg:text-[64px] font-semibold tracking-tight leading-[1.05] text-gray-900 dark:text-white;
+  }
+
+  .apple-subheadline {
+    @apply text-[19px] md:text-[21px] font-normal text-gray-600 dark:text-gray-400 leading-relaxed;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-5 py-3 text-base font-normal text-white bg-[#0071e3] rounded-full hover:bg-[#0077ed] transition-all duration-200 ease-out;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-5 py-3 text-base font-normal text-[#0071e3] dark:text-white border-2 border-[#0071e3] dark:border-white rounded-full hover:bg-[#0071e3] hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-200 ease-out;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white dark:bg-[#1d1d1f] rounded-3xl p-8 transition-all duration-500 ease-out;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  }
+
+  .dark .card {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .dark .card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Glassmorphism */
+  .glass {
+    @apply bg-white/70 dark:bg-black/70;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+}
+
+@layer utilities {
+  /* Animations */
+  .fade-in {
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  .fade-in-delay-1 {
+    animation: fadeIn 0.8s ease-out 0.2s both;
+  }
+
+  .fade-in-delay-3 {
+    animation: fadeIn 0.8s ease-out 0.4s both;
+  }
+
+  .scroll-animate {
+    transition: opacity 0.7s, transform 0.7s;
+  }
+
+  .scroll-animate.animate-in {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

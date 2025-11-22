@@ -3,8 +3,10 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Timeline from '@/components/Timeline';
+import Link from 'next/link';
 import kingdomsData from '@/data/kingdoms.json';
 import kingsData from '@/data/kings.json';
+import sitesData from '@/data/sites.json';
 
 interface King {
   id: string;
@@ -45,6 +47,12 @@ export default async function KingdomPage({ params }: { params: Promise<{ slug: 
   const kingdomKings = kingsData.filter((king: King) => 
     king.kingdom.toLowerCase().includes(kingdom.name.toLowerCase()) ||
     kingdom.name.toLowerCase().includes(king.kingdom.toLowerCase())
+  );
+
+  // Filter sites for this kingdom
+  const kingdomSites = (sitesData as any[]).filter((site: any) => 
+    site.kingdom.toLowerCase().includes(kingdom.name.toLowerCase()) ||
+    kingdom.name.toLowerCase().includes(site.kingdom.toLowerCase())
   );
 
   return (
@@ -109,6 +117,39 @@ export default async function KingdomPage({ params }: { params: Promise<{ slug: 
                       />
                     </div>
                   </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {kingdomSites.length > 0 && (
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold mb-6">Known Historical Sites</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {kingdomSites.map((site: any) => (
+                  <Link 
+                    key={site.id}
+                    href={`/sites/${site.id}`}
+                    className="card p-5 hover:scale-105 transition-transform"
+                  >
+                    <div className="flex items-start gap-4">
+                      <span className="text-4xl">
+                        {site.type === 'stupa' && '⛩️'}
+                        {site.type === 'palace' && '🏰'}
+                        {site.type === 'temple' && '🛕'}
+                        {site.type === 'fortress' && '🏛️'}
+                        {site.type === 'monastery' && '🕉️'}
+                        {!['stupa', 'palace', 'temple', 'fortress', 'monastery'].includes(site.type) && '📍'}
+                      </span>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-lg mb-1">{site.name}</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{site.period}</p>
+                        {site.builtBy && (
+                          <p className="text-sm text-gray-500 dark:text-gray-500">Built by {site.builtBy}</p>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>

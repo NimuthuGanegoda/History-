@@ -6,7 +6,7 @@
   {"name": "Tissa (regent)", "slug": "tissa-regent", "kingdom": "upatissa-nuwara", "reign": "454–437 BCE"},
   {"name": "Pandukabhaya", "slug": "pandukabhaya", "kingdom": "anuradhapura", "reign": "437–367 BCE"},
   {"name": "Mutasiva", "slug": "mutasiva", "kingdom": "anuradhapura", "reign": "367–307 BCE"},
-  {"name": "Devanampiya Tissa", "slug": "devanampiya-tissa", "kingdom": "anuradhapura", "reign": "307–267 BCE"},
+  {"name": "Devanampiya Tissa", "slug": "devanampiya-tissa", "kingdom": "anuradhapura", "reign": "307–267 BCE", "internationalConnections": "Contemporary and ally of Emperor Ashoka of the Mauryan Empire (India). Ashoka sent his son Mahinda to introduce Buddhism to Sri Lanka during Tissa's reign, establishing deep diplomatic and religious ties between the two kingdoms.", "media": []},
   {"name": "Uttiya", "slug": "uttiya", "kingdom": "anuradhapura", "reign": "267–257 BCE"},
   {"name": "Mahasiva", "slug": "mahasiva", "kingdom": "anuradhapura", "reign": "257–247 BCE"},
   {"name": "Suratissa", "slug": "suratissa", "kingdom": "anuradhapura", "reign": "247–237 BCE"},

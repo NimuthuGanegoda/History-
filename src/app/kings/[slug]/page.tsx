@@ -11,6 +11,12 @@ interface King {
   slug: string;
   kingdom: string;
   reign: string;
+  internationalConnections?: string;
+  media?: {
+    type: 'youtube' | 'vimeo' | 'embed';
+    url: string;
+    title?: string;
+  }[];
   [key: string]: any; // Allow additional properties
 }
 
@@ -61,6 +67,15 @@ export default async function KingPage({ params }: { params: Promise<{ slug: str
             </div>
           )}
 
+          {king.internationalConnections && (
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold mb-3">International Connections</h2>
+              <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded">
+                <p className="text-lg">{king.internationalConnections}</p>
+              </div>
+            </div>
+          )}
+
           {king.biography && (
             <div className="mb-6">
               <h2 className="text-2xl font-bold mb-3">Biography</h2>
@@ -72,7 +87,52 @@ export default async function KingPage({ params }: { params: Promise<{ slug: str
             </div>
           )}
 
-          {!king.biography && !king.notes && (
+          {king.media && king.media.length > 0 && (
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold mb-4">Media & Films</h2>
+              <div className="grid grid-cols-1 gap-6">
+                {king.media.map((item: any, index: number) => (
+                  <div key={`${king.id}-media-${index}`} className="card overflow-hidden">
+                    {item.title && (
+                      <div className="p-4 bg-gray-50 dark:bg-gray-800">
+                        <h3 className="font-semibold">{item.title}</h3>
+                      </div>
+                    )}
+                    <div className="relative" style={{ paddingBottom: '56.25%' }}>
+                      {item.type === 'youtube' && (
+                        <iframe
+                          className="absolute top-0 left-0 w-full h-full"
+                          src={`https://www.youtube.com/embed/${item.url}`}
+                          title={item.title || `Video about ${king.name}`}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      )}
+                      {item.type === 'vimeo' && (
+                        <iframe
+                          className="absolute top-0 left-0 w-full h-full"
+                          src={`https://player.vimeo.com/video/${item.url}`}
+                          title={item.title || `Video about ${king.name}`}
+                          allow="autoplay; fullscreen; picture-in-picture"
+                          allowFullScreen
+                        />
+                      )}
+                      {item.type === 'embed' && (
+                        <iframe
+                          className="absolute top-0 left-0 w-full h-full"
+                          src={item.url}
+                          title={item.title || `Video about ${king.name}`}
+                          allowFullScreen
+                        />
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {!king.biography && !king.notes && !king.media && (
             <p className="text-gray-600 dark:text-gray-400">
               Detailed biography for {king.name} is being researched and will be added soon.
             </p>

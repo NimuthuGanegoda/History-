@@ -39,6 +39,12 @@ export default function Header() {
               Kingdoms
             </Link>
             <Link
+              href="/sites"
+              className="text-[12px] font-normal text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+            >
+              Sites
+            </Link>
+            <Link
               href="/connections"
               className="text-[12px] font-normal text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
             >

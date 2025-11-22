@@ -17,6 +17,11 @@ interface King {
     url: string;
     title?: string;
   }[];
+  locations?: {
+    name: string;
+    description?: string;
+    googleMapsUrl: string;
+  }[];
   [key: string]: any; // Allow additional properties
 }
 
@@ -132,7 +137,36 @@ export default async function KingPage({ params }: { params: Promise<{ slug: str
             </div>
           )}
 
-          {!king.biography && !king.notes && !king.media && (
+          {king.locations && king.locations.length > 0 && (
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold mb-4">Historical Locations</h2>
+              <div className="grid grid-cols-1 gap-6">
+                {king.locations.map((location: any, index: number) => (
+                  <div key={`${king.id}-location-${index}`} className="card overflow-hidden">
+                    <div className="p-4 bg-gray-50 dark:bg-gray-800">
+                      <h3 className="font-semibold text-lg mb-1">📍 {location.name}</h3>
+                      {location.description && (
+                        <p className="text-sm text-gray-600 dark:text-gray-400">{location.description}</p>
+                      )}
+                    </div>
+                    <div className="relative" style={{ paddingBottom: '56.25%' }}>
+                      <iframe
+                        className="absolute top-0 left-0 w-full h-full"
+                        src={location.googleMapsUrl}
+                        title={`Map of ${location.name}`}
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {!king.biography && !king.notes && !king.media && !king.locations && (
             <p className="text-gray-600 dark:text-gray-400">
               Detailed biography for {king.name} is being researched and will be added soon.
             </p>

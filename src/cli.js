@@ -43,20 +43,35 @@ function findKing(term){
 
 function exportMarkdown(dir){
   if(!fs.existsSync(dir)) fs.mkdirSync(dir,{recursive:true});
+
   // kingdoms summary
   const kingdomIndex = ['# Kingdoms',''];
   for(const k of kingdoms){
-    kingdomIndex.push(`- **${k.name}** (${k.era}) — ${k.notes||''}`);
+    kingdomIndex.push(`- **[${k.name}](${k.id}/index.md)** (${k.period}) — ${k.description||''}`);
   }
   fs.writeFileSync(path.join(dir,'kingdoms.md'), kingdomIndex.join('\n')+'\n');
+
   // per kingdom
   for(const k of kingdoms){
+    const kingdomDir = path.join(dir, k.id);
+    if(!fs.existsSync(kingdomDir)) fs.mkdirSync(kingdomDir, {recursive:true});
     const list = kingsByKingdom[k.id]||[];
-    const lines = [`# ${k.name}`, '', `Era: ${k.era}`, '', '## Kings', '', '| Slug | Name | Reign |', '| --- | --- | --- |'];
+    const lines = [`# ${k.name}`, '', `*${k.period}*`, '', k.description, '', '## Kings', ''];
     for(const king of list){
-      lines.push(`| ${king.slug} | ${king.name} | ${king.reign} |`);
+      lines.push(`- [${king.name}](${king.slug}.md) (${king.reign})`);
+      const kingFile = path.join(kingdomDir, `${king.slug}.md`);
+      const kingLines = [
+        `# ${king.name}`,
+        '',
+        `**Reign:** ${king.reign}`,
+        ''
+      ];
+      if(king.biography){
+        kingLines.push(king.biography);
+      }
+      fs.writeFileSync(kingFile, kingLines.join('\n') + '\n');
     }
-    fs.writeFileSync(path.join(dir, `${k.id}.md`), lines.join('\n')+'\n');
+    fs.writeFileSync(path.join(kingdomDir, `index.md`), lines.join('\n')+'\n');
   }
   console.log(`Markdown exported to ${dir}`);
 }

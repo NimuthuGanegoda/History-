@@ -45,12 +45,14 @@ export default async function KingdomPage({ params }: { params: Promise<{ slug: 
 
   // Filter kings for this kingdom
   const kingdomKings = kingsData.filter((king: King) => 
+    king.kingdom === kingdom.id ||
     king.kingdom.toLowerCase().includes(kingdom.name.toLowerCase()) ||
     kingdom.name.toLowerCase().includes(king.kingdom.toLowerCase())
   );
 
   // Filter sites for this kingdom
   const kingdomSites = (sitesData as any[]).filter((site: any) => 
+    site.kingdom.toLowerCase() === kingdom.id.toLowerCase() ||
     site.kingdom.toLowerCase().includes(kingdom.name.toLowerCase()) ||
     kingdom.name.toLowerCase().includes(site.kingdom.toLowerCase())
   );

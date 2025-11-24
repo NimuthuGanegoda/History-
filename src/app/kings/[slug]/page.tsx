@@ -80,10 +80,37 @@ export default async function KingPage({ params }: { params: Promise<{ slug: str
             <div className="mb-6">
               <h2 className="text-2xl font-bold mb-3">Biography</h2>
               <div className="prose dark:prose-invert max-w-none">
-                {king.biography.split('\n\n').map((paragraph: string) => (
-                  <p key={paragraph.substring(0, 50)} className="mb-4">{paragraph}</p>
-                ))}
+                <p className="mb-4 text-lg leading-relaxed">{king.biography}</p>
               </div>
+            </div>
+          )}
+
+          {king.sections && king.sections.length > 0 && (
+            <div className="mb-6">
+              {king.sections.map((section: any, idx: number) => (
+                <div key={idx} className="mb-6">
+                  {section.heading && section.heading !== 'Biography' && (
+                    <h2 className="text-2xl font-bold mb-3">{section.heading}</h2>
+                  )}
+                  {section.content && section.content.length > 0 && (
+                    <div className="prose dark:prose-invert max-w-none mb-4">
+                      {section.content.map((paragraph: string, pIdx: number) => (
+                        <p key={pIdx} className="mb-4 text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: paragraph }} />
+                      ))}
+                    </div>
+                  )}
+                  {section.infoBoxes && section.infoBoxes.length > 0 && (
+                    <div className="space-y-4">
+                      {section.infoBoxes.map((box: any, bIdx: number) => (
+                        <div key={bIdx} className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded">
+                          <h3 className="font-semibold text-lg mb-2">{box.title}</h3>
+                          <p className="text-base" dangerouslySetInnerHTML={{ __html: box.content }} />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           )}
 
@@ -161,7 +188,7 @@ export default async function KingPage({ params }: { params: Promise<{ slug: str
             </div>
           )}
 
-          {!king.biography && !king.notes && !king.media && !king.locations && (
+          {!king.biography && !king.sections && !king.notes && !king.media && !king.locations && (
             <p className="text-gray-600 dark:text-gray-400">
               Detailed biography for {king.name} is being researched and will be added soon.
             </p>

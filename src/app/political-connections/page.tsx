@@ -78,11 +78,11 @@ const relationshipColors: any = {
 };
 
 const relationshipIcons: any = {
-  family: '👨‍👩‍👦',
+  family: '👨‍👩‍👧‍👦',
   succession: '👑',
   conflict: '⚔️',
   alliance: '🤝',
-  mentioned: '📜'
+  mentioned: '📖'
 };
 
 const relationshipLabels: any = {
